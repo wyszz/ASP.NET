@@ -28,6 +28,12 @@ namespace WebApplication1
                             Page.Response.Redirect(surl);
                             break;
                         }
+                    case 1:
+                        {
+                            string surl = "webform2.aspx?k1=" + this.RadioButtonList1.SelectedItem.Text+"&k2=123&k3=abc";
+                            Page.Response.Redirect(surl);
+                            break;
+                        }
                     default:
                         {
                             Response.Write("<script>alert('请选择其中一个方法！')</script>");
