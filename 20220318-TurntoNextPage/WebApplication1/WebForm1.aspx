@@ -12,7 +12,7 @@
         <div>
             <asp:RadioButtonList ID="RadioButtonList1" runat="server">
                 <asp:ListItem Selected="True">1: QueryString</asp:ListItem>
-                <asp:ListItem>2:传多值</asp:ListItem>
+                <asp:ListItem>2: 传多值</asp:ListItem>
                 <asp:ListItem>3:Cookie</asp:ListItem>
                 <asp:ListItem>4:Session</asp:ListItem>
                 <asp:ListItem>5:Application</asp:ListItem>

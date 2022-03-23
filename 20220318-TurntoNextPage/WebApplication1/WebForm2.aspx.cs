@@ -20,7 +20,20 @@ namespace WebApplication1
             if (this.Request.QueryString["k2"] != null && this.Request.QueryString["k3"] != null)
             {
                 this.Label2.Text += this.Request.QueryString["k1"] + " " + this.Request.QueryString["k2"] + " " + this.Request.QueryString["k3"];
-
+            }
+            //3
+            if (Request.Cookies["name"] != null)
+            {
+                this.Label3.Text += HttpUtility.UrlDecode(Request.Cookies["name"].Value.ToString());
+            }
+            //4
+            if (Session["sa"]!=null)
+            {
+                this.Label4.Text += Session["sa"].ToString();
+            }
+            if (Application["ab"] != null)
+            {
+                this.Label5.Text += Application["ab"].ToString();
             }
         }
     }
