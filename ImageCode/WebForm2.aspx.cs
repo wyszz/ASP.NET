@@ -39,14 +39,17 @@ namespace ImageCode
                 int y = random.Next(Img.Height);
                 Img.SetPixel(x, y, Color.FromArgb(random.Next()));
             }
-            int z = 6;//干扰线条数
+            int z =6;//干扰线条数
             for (int i = 0; i < z; i++)
             {
                 int x1 = random.Next(Img.Width);
                 int x2 = random.Next(Img.Width);
                 int y1 = random.Next(Img.Height);
                 int y2 = random.Next(Img.Height);
-                g.DrawLine(new Pen(Color.LightGray, 1), x1, y1, x2, y2);//根据坐标画线
+                int r = random.Next(255);
+                int green = random.Next(255);
+                int b = random.Next(255);
+                g.DrawLine(new Pen(Color.FromArgb(r,green,b), 1), x1, y1, x2, y2);//根据坐标画线
             }
             //文字字体
             Font f = new Font("Arial Black ", 12);

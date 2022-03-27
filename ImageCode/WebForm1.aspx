@@ -12,12 +12,12 @@
         <div>
             <asp:Label ID="Label1" runat="server" Text="验证码" Font-Size="30px"></asp:Label>
             <asp:TextBox ID="tbx_imgcheckingcode" runat="server" Width="70px"></asp:TextBox>
-            <asp:ImageButton ID="ibtn_imgcheckingcode" src="WebForm2.aspx" runat="server" Height="40px" Width="70px" ondblclick="this.src = 'WebForm2.aspx?flag=' + javascript:changeCode()" />
+            <asp:ImageButton ID="ibtn_imgcheckingcode" src="WebForm2.aspx" runat="server" Height="40px" Width="70px" οnclick="this.src=this.src+'?'" ImageAlign="Middle" ToolTip="看不清我，就点一下我吧！"  />
             <a href="javascript:changeCode()" style="text-decoration: underline; font-size: 10px;">换一张</a>
             <%-- ondblclick 事件在用户双击元素时发生。--%>
-            <img src="WebForm2.aspx" title='看不清楚，双击图片换一张。' ondblclick="this.src = 'WebForm2.aspx?flag=' + Math.random() " />
             <script type="text/javascript">
-                function changeCode() {
+                function changeCode() 
+                {
                     document.getElementById('ibtn_imgcheckingcode').src = document.getElementById('ibtn_imgcheckingcode').src + '?';
                 }
             </script>
