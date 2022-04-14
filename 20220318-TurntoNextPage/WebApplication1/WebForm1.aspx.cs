@@ -50,7 +50,7 @@ namespace WebApplication1
                             Response.Redirect("webform2.aspx");
                             break;
                         }
-                    // 生命周期最长，在服务器启动时自动创建，在服务器停止时销毁。
+                    // 生命周期最长，在服务器启动时自动创建，在服务器停止时销毁。没有 Session 安全
                     case 4:
                         {
                             Application["ab"] = this.RadioButtonList1.SelectedItem.Text;
