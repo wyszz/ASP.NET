@@ -34,7 +34,7 @@ namespace WebApplication1
                             Page.Response.Redirect(surl);
                             break;
                         }
-                    //
+                    //cookie和QueryString只能传字符串
                     case 2:
                         {
                             HttpCookie cookie_name = new HttpCookie("name");
@@ -43,14 +43,14 @@ namespace WebApplication1
                             Response.Redirect("~/webform2.aspx");
                             break;
                         }
-                    // Session 可以传对象，区分大小写，session是会话变量，只要同一个浏览器没有被关闭，session对象就会存在
+                    // Session 可以传对象，区分大小写，session 是会话变量，只要同一个浏览器没有被关闭，session 对象就会存在，Session 私有的
                     case 3:
                         {
                             Session["sa"] = this.RadioButtonList1.SelectedItem.Text;
                             Response.Redirect("webform2.aspx");
                             break;
                         }
-                    // 生命周期最长，在服务器启动时自动创建，在服务器停止时销毁。没有 Session 安全
+                    // 生命周期最长，在服务器启动时自动创建，在服务器停止时销毁。没有 Session 安全，Application 公有的，最大的风险是所有用户共有信息
                     case 4:
                         {
                             Application["ab"] = this.RadioButtonList1.SelectedItem.Text;
