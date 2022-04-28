@@ -101,7 +101,6 @@ namespace _20220424_3Operations
             {
                 return false;
             }
-
         }
 
         //
@@ -267,6 +266,53 @@ namespace _20220424_3Operations
             }
             this.LoadGridView();
             this.MultiView1.SetActiveView(this.v_GV);
+        }
+
+        //
+          private int DoDeleteOffice(string officeid)
+        {
+            string connstring = ConfigurationManager.ConnectionStrings["ScoreDBConn"].ConnectionString;
+            SqlConnection sconn = new SqlConnection(connstring);
+            string deletestring = "delete from office where officeid=@officeid";
+            SqlCommand scd = new SqlCommand(deletestring, sconn);
+            scd.Parameters.AddWithValue("officeid", officeid);
+            if (sconn.State == ConnectionState.Closed)
+            {
+                sconn.Open();
+            }
+            int r = scd.ExecuteNonQuery();
+            sconn.Close();
+            return r;
+        }
+
+        protected void gv_Office_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            if (e.RowIndex>=0)
+            {
+                string officeid = this.gv_Office.DataKeys[e.RowIndex].Values["officeid"].ToString();
+                int r = DoDeleteOffice(officeid);
+                if (r > 0)
+                {
+                    Response.Write("<script>alert('删除成功')</script>");
+                }
+                else
+                {
+                    Response.Write("<script>alert('删除失败')</script>");
+                }
+                this.LoadGridView();
+            }
+        }
+
+
+        protected void gv_Office_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType==DataControlRowType.DataRow)
+            {
+                if (e.Row.RowState==DataControlRowState.Normal||e.Row.RowState==DataControlRowState.Alternate)
+                {
+                    ((LinkButton)e.Row.Cells[7].Controls[0]).Attributes.Add("onclick", "javascript:return confirm('你确定要删除么？')");
+                }
+            }
         }
     }
 }
