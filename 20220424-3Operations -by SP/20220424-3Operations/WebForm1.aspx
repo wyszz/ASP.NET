@@ -35,7 +35,7 @@
         <div>
             <asp:MultiView ID="MultiView1" runat="server">
                 <asp:View ID="v_GV" runat="server">
-                    <asp:GridView ID="gv_Office" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" OnRowCancelingEdit="gv_Office_RowCancelingEdit" OnRowEditing="gv_Office_RowEditing" OnRowUpdating="gv_Office_RowUpdating" OnRowDeleting="gv_Office_RowDeleting" OnRowDataBound="gv_Office_RowDataBound">
+                    <asp:GridView ID="gv_Office" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" OnRowCancelingEdit="gv_Office_RowCancelingEdit" OnRowEditing="gv_Office_RowEditing" OnRowUpdating="gv_Office_RowUpdating" OnRowDeleting="gv_Office_RowDeleting" OnRowDataBound="gv_Office_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_Office_PageIndexChanging" PageSize="5">
                         <AlternatingRowStyle BackColor="White" />
                         <Columns>
                             <asp:BoundField DataField="officeid">

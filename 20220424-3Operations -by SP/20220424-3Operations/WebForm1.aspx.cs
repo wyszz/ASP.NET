@@ -328,5 +328,11 @@ namespace _20220424_3Operations
                 }
             }
         }
+
+        protected void gv_Office_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            this.gv_Office.PageIndex = e.NewPageIndex;
+            this.LoadGridView();
+        }
     }
 }
