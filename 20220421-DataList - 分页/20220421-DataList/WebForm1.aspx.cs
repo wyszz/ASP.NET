@@ -21,7 +21,7 @@ namespace _20220421_DataList
             }
         }
 
-    private void LoadDataList()
+        private void LoadDataList()
         {
             string connstring = ConfigurationManager.ConnectionStrings["ScoreDBConn"].ConnectionString;
             SqlConnection sconn = new SqlConnection(connstring);
@@ -64,7 +64,7 @@ namespace _20220421_DataList
             LinkButton lkbtn = (LinkButton)sender;
             string cmda = lkbtn.CommandArgument;
             int pageindex = Convert.ToInt32(ViewState["pageindex"].ToString());
-            if(cmda=="pre")
+            if (cmda == "pre")
             {
                 pageindex = pageindex - 1;
             }
@@ -75,6 +75,7 @@ namespace _20220421_DataList
 
             ViewState["pageindex"] = pageindex;
             this.LoadDataList();
+            this.tbx_pagenum.Text = (pageindex + 1).ToString();
         }
 
         protected void btn_go_Click(object sender, EventArgs e)
@@ -82,18 +83,20 @@ namespace _20220421_DataList
             int pagenum = Convert.ToInt32(this.tbx_pagenum.Text.Trim());
             int pageindex = pagenum - 1;
             int pagecount = Convert.ToInt32(ViewState["pagecount"]);
-            if (pageindex<0)
+            //int.TryParse
+            if (pageindex < 0)
             {
-                Response.Write("<script>alert('页数必须大于0！')</script>");
-                return;
+                Response.Write("<script>alert('页数必须大于0！将回到首页')</script>");
+                pageindex = 0;
             }
-            if (pageindex>=pagecount)
+            if (pageindex >= pagecount)
             {
-                Response.Write("<script>alert('页数不能超过总页数！')</script>");
-                return;
+                Response.Write("<script>alert('页数不能超过总页数！将达到最后一页')</script>");
+                pageindex = pagecount - 1;
             }
             ViewState["pageindex"] = pageindex;
             this.LoadDataList();
+            this.tbx_pagenum.Text = (pageindex + 1).ToString();
         }
     }
 }
