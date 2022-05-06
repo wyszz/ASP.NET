@@ -244,22 +244,28 @@ namespace _20220424_3Operations
 
         private int DoInsertOffice(OfficeClass oc)
         {
-            string connstring = ConfigurationManager.ConnectionStrings["ScoreDBConn"].ConnectionString;
-            SqlConnection sconn = new SqlConnection(connstring);
-            string insertstring = "insert into office values (@officeid,@officename,@schoolid,@authorizedid)";
-            //string insertstring = "insert into office((officeid,officename,schoolid,authorizedid) values (@officeid,@officename,@schoolid,@authorizedid)";
-            SqlCommand scd = new SqlCommand(insertstring, sconn);
-            scd.Parameters.AddWithValue("officeid", oc.OfficeID);
-            scd.Parameters.AddWithValue("officename", oc.OfficeName);
-            scd.Parameters.AddWithValue("schoolid", oc.SchoolID);
-            scd.Parameters.AddWithValue("authorizedid", oc.Authorizedid);
-            if (sconn.State == ConnectionState.Closed)
+            if (oc != null)
             {
-                sconn.Open();
+                DataTable dt = DT;
+                DataRow dr = dt.NewRow();
+                //反射
+                Type t = oc.GetType();
+                System.Reflection.PropertyInfo[] p = t.GetProperties();
+                for (int i = 0; i < p.Length; i++)
+                {
+                    object obj = p[i].GetValue(oc, null);
+                    dr[p[i].Name] = obj;
+                    //dr[p[i].Name]= p[i].GetValue(oc, null);
+                }
+                dt.Rows.Add(dr);
+                string connstring = ConfigurationManager.ConnectionStrings["ScoreDBConn"].ConnectionString;
+                SqlConnection sconn = new SqlConnection(connstring);
+                string selectstring = "select * from office";
+                SqlDataAdapter sda = new SqlDataAdapter(selectstring, sconn);
+                SqlCommandBuilder scb = new SqlCommandBuilder(sda);
+                return sda.Update(DT);
             }
-            int r = scd.ExecuteNonQuery();
-            sconn.Close();
-            return r;
+            return 0;
         }
 
         protected void btn_Save_Click(object sender, EventArgs e)
@@ -284,7 +290,6 @@ namespace _20220424_3Operations
             oc.OfficeName = this.tbx_Officename.Text.Trim();
             oc.SchoolID = this.ddl_School.SelectedValue;
             oc.Authorizedid = this.ddl_Status.SelectedValue;
-
             //
             if (this.IsExistSameOfficeName(oc))
             {
@@ -308,18 +313,19 @@ namespace _20220424_3Operations
         //
         private int DoDeleteOffice(string officeid)
         {
-            string connstring = ConfigurationManager.ConnectionStrings["ScoreDBConn"].ConnectionString;
-            SqlConnection sconn = new SqlConnection(connstring);
-            string deletestring = "delete from office where officeid=@officeid";
-            SqlCommand scd = new SqlCommand(deletestring, sconn);
-            scd.Parameters.AddWithValue("officeid", officeid);
-            if (sconn.State == ConnectionState.Closed)
+            if (officeid!="")
             {
-                sconn.Open();
+                DataTable dt = DT;
+                DataRow dr = dt.Rows.Find(officeid);
+                dr.Delete();
+                string connstring = ConfigurationManager.ConnectionStrings    ["ScoreDBConn"].ConnectionString;
+                SqlConnection sconn = new SqlConnection(connstring);
+                string selectstring = "select * from office";
+                SqlDataAdapter sda = new SqlDataAdapter(selectstring, sconn);
+                SqlCommandBuilder scb = new SqlCommandBuilder(sda);
+                return sda.Update(DT);
             }
-            int r = scd.ExecuteNonQuery();
-            sconn.Close();
-            return r;
+            return 0;
         }
 
         protected void gv_Office_RowDeleting(object sender, GridViewDeleteEventArgs e)
