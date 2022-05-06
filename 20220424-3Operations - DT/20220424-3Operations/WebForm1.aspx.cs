@@ -87,20 +87,13 @@ namespace _20220424_3Operations
 
         private bool IsExistSameOfficeName(OfficeClass oc)
         {
-            string connstring = ConfigurationManager.ConnectionStrings["ScoreDBConn"].ConnectionString;
-            SqlConnection sconn = new SqlConnection(connstring);
             string selectstring = "select * from office where officename=@officename and schoolid=@schoolid and officeid<>@officeid";
-            SqlCommand scd = new SqlCommand(selectstring, sconn);
-            scd.Parameters.AddWithValue("officeid", oc.OfficeID);
-            scd.Parameters.AddWithValue("officename", oc.OfficeName);
-            scd.Parameters.AddWithValue("schoolid", oc.SchoolID);
-            if (sconn.State == ConnectionState.Closed)
-            {
-                sconn.Open();
-            }
-            object result = scd.ExecuteScalar();
-            sconn.Close();
-            if (result != null)
+            //过滤表达式
+            string filterexp = string.Format("officename='{0}' and schoolid='{1}' and officeid<>'{2}'", oc.OfficeName, oc.SchoolID, oc.OfficeID);
+            //string f1 = "officename like '%" + Content + "%'";
+            DataRow[] drs = null;
+            drs = DT.Select(filterexp);
+            if (drs != null && drs.Length>0)
             {
                 return true;
             }
