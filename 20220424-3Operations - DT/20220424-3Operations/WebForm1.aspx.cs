@@ -87,7 +87,7 @@ namespace _20220424_3Operations
 
         private bool IsExistSameOfficeName(OfficeClass oc)
         {
-            string selectstring = "select * from office where officename=@officename and schoolid=@schoolid and officeid<>@officeid";
+            //string selectstring = "select * from office where officename=@officename and schoolid=@schoolid and officeid<>@officeid";
             //过滤表达式
             string filterexp = string.Format("officename='{0}' and schoolid='{1}' and officeid<>'{2}'", oc.OfficeName, oc.SchoolID, oc.OfficeID);
             //string f1 = "officename like '%" + Content + "%'";
